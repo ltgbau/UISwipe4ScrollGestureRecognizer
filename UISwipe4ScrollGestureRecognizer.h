@@ -1,9 +1,9 @@
 //
 //  UISwipe4ScrollGestureRecognizer.h
-//  Pulse
 //
 //  Created by Jose Luis Campaña Perez on 04/08/11.
-//  Copyright 2011 Layers.com. All rights reserved.
+//  jose@iz3solutions.com
+//  Copyright 2011 iZ3. All rights reserved.
 //
 
 #import <Foundation/Foundation.h>
