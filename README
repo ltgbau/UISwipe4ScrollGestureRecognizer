@@ -1,0 +1,36 @@
+What is it?
+===========
+A subclass of UIGestureRecognizer to implement Swipe gesture on a UIScrollView.
+
+Why?
+====
+Cuz UISwipeGestureRecognizer is ignored on a UIScrollView when the ContentSize is greater than its frame.width.
+
+How to use?
+===========
+1)Import: UISwipe4ScrollGestureRecognizer.h
+2)Assuming that _scroll is an UIScrollView...
+
+UISwipe4ScrollGestureRecognizer *swipe;
+swipe = [[UISwipe4ScrollGestureRecognizer alloc] initWithTarget:self action:@selector(tocoto:)];
+[_scroll addGestureRecognizer:swipe];
+[swipe release];
+
+You can set the number of touches to trigger it or the direction of the swipe:
+[swipe setDirection:UISwipeGestureRecognizerDirectionRight];
+[swipe setMinimumNumberOfTouches:2];
+
+Even the velocity of the gesture:
+[swipe setSwipeVelocityInView:100.0];
+
+How can I know the direction of the swipe?
+==========================================
+
+In your defined callback (in the example our callback method was "tocoto"), you can read the direction of the swipe like this:
+
+-(void)tocoto:(UISwipe4ScrollGestureRecognizer *)recognizer
+{
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionRight) NSLog(@"right");
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft) NSLog(@"left");
+    [self doMoreActions];
+}
