@@ -78,14 +78,20 @@
 {
     if( !m_delegate )
         return YES;
-    return [m_delegate gestureRecognizer:gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:otherGestureRecognizer];
+    
+    if ([m_delegate respondsToSelector:@selector(gestureRecognizer: shouldRecognizeSimultaneouslyWithGestureRecognizer:)]) 
+        return [m_delegate gestureRecognizer:gestureRecognizer shouldRecognizeSimultaneouslyWithGestureRecognizer:otherGestureRecognizer];
+    else return YES;
 }
 
 - (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
 {
     if( !m_delegate )
         return YES;
-    return [m_delegate gestureRecognizerShouldBegin:gestureRecognizer];
+    
+    if ([m_delegate respondsToSelector:@selector(gestureRecognizerShouldBegin:)])
+         return [m_delegate gestureRecognizerShouldBegin:gestureRecognizer];
+    else return YES;
 }
 
 
