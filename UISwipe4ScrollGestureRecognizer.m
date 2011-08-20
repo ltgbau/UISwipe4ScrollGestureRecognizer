@@ -58,7 +58,7 @@
 
 - (id)initWithTarget:(id)target action:(SEL)action
 {
-
+    
     self = [super initWithTarget:self action:@selector(callback:)];
     if (self)
     {
@@ -90,7 +90,7 @@
         return YES;
     
     if ([m_delegate respondsToSelector:@selector(gestureRecognizerShouldBegin:)])
-         return [m_delegate gestureRecognizerShouldBegin:gestureRecognizer];
+        return [m_delegate gestureRecognizerShouldBegin:gestureRecognizer];
     else return YES;
 }
 
@@ -102,23 +102,44 @@
         _panning = NO;
     }
     CGPoint v =[recognizer velocityInView:recognizer.view];
-    
-    
-    if( (abs(v.x) >= _touchSpeed) && !_panning)
-    {
-        _panning = YES;
+    if (recognizer.direction == UISwipeGestureRecognizerDirectionLeft || recognizer.direction == UISwipeGestureRecognizerDirectionRight) {
         
-        [recognizer cancelsTouchesInView];
-        
-        if(v.x>0) _direccion = UISwipeGestureRecognizerDirectionRight;
-        else _direccion = UISwipeGestureRecognizerDirectionLeft;
-
-        if ((_direccionDelegate == _direccion) || (_direccionDelegate == NO_DIR))
+        if( (abs(v.x) >= _touchSpeed) && !_panning)
         {
-            if( m_target )
-                [m_target performSelector:m_callback withObject:recognizer];
+            _panning = YES;
+            
+            [recognizer cancelsTouchesInView];
+            
+            if(v.x>0) _direccion = UISwipeGestureRecognizerDirectionRight;
+            else _direccion = UISwipeGestureRecognizerDirectionLeft;
+            
+            if ((_direccionDelegate == _direccion) || (_direccionDelegate == NO_DIR))
+            {
+                if( m_target )
+                    [m_target performSelector:m_callback withObject:recognizer];
+            }
         }
+        
+    } else {
+        if( (abs(v.y) >= _touchSpeed) && !_panning)
+        {
+            _panning = YES;
+            
+            [recognizer cancelsTouchesInView];
+            
+            if(v.y>0) _direccion = UISwipeGestureRecognizerDirectionDown;
+            else _direccion = UISwipeGestureRecognizerDirectionUp;
+            
+            if ((_direccionDelegate == _direccion) || (_direccionDelegate == NO_DIR))
+            {
+                if( m_target )
+                    [m_target performSelector:m_callback withObject:recognizer];
+            }
+        }
+        
     }
+    
+    
 }
 
 -(void)setDirection:(UISwipeGestureRecognizerDirection)direction
